@@ -18,10 +18,20 @@ public abstract class Display {
         //делаем так, что бы при нажатии на "крестик" окно закрывалось
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //создаем наш лист
-        content = new Canvas();
+        content = new Canvas(){
+            //когда создается Canvas, передается графический обьект, с помощью которого можно рисовать
+            public void paint(Graphics g){
+                super.paint(g);//перед тем как изменять свою функцию, нужно запустить ориг, ибо важные вещи делает
+                render(g);//запускаем внутреннюю ф-ию
+
+            }
+        };
         //создаем размер нашего листа
         Dimension size = new Dimension(width, height);
         content.setPreferredSize(size);
+
+        //добавляем фон в нашем окне
+        content.setBackground(Color.black);//через класс Color добавляем цвет черный
 
         //запрещаем игроку менять наше окно
         window.setResizable(false);
@@ -32,7 +42,18 @@ public abstract class Display {
         //делаем так, что бы окно появлялось по центру
         window.setLocationRelativeTo(null);//если нет компонента (у нас null) окно будет по середине
         window.setVisible(true);//делаем, что бы окно было видимым
+    }
+    //создаем функцию для обнавления экрана
+    public static void render(){
+        content.repaint();
+    }
+    //функция позволяет работать с графикой в нашем окне через параметр g
+    private static void render(Graphics g){
+        //выбираем цвет
+        g.setColor(Color.white);//выбрали белый
 
+        //рисуем круг (центр начинает отсчет от левый верхний угол окна)
+        g.fillOval(400-50, 300-50, 100, 100);
 
     }
 
