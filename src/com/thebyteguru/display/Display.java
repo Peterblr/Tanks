@@ -7,7 +7,14 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import javax.swing.*;
 import java.awt.*;
+<<<<<<< HEAD
 import java.awt.image.BufferStrategy;
+=======
+<<<<<<< HEAD
+import java.awt.image.BufferStrategy;
+=======
+>>>>>>> 5aad55debbc3b6bd0fb6d7f15f5a7d2f2df27f4f
+>>>>>>> 2300a1c0633f87e1ac556521294d99419eed903b
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 import java.util.Arrays;
@@ -26,15 +33,37 @@ public abstract class Display {
     private static Graphics bufferGraphics;
     //создаем цвет, чтобы очищать наш имейдж
     private static int clearColor;
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 2300a1c0633f87e1ac556521294d99419eed903b
     //с помощью этой переменной будем имплементировать наши бафферы
     private static BufferStrategy bufferStrategy;
 
 
+<<<<<<< HEAD
 
 
 
     //метод создает наше окно      //ширина, высота и имя нашего окна
     public static void create(int width, int height, String title, int new_clearColor, int numBuffer) {
+=======
+=======
+>>>>>>> 5aad55debbc3b6bd0fb6d7f15f5a7d2f2df27f4f
+    //temp
+    private static float delta = 0;
+
+    //temp end
+
+
+<<<<<<< HEAD
+    //метод создает наше окно      //ширина, высота и имя нашего окна
+    public static void create(int width, int height, String title, int new_clearColor, int numBuffer) {
+=======
+    //метод создает наше окно
+    public static void create(int width, int height, String title, int new_clearColor) { //ширина, высота и имя нашего окна
+>>>>>>> 5aad55debbc3b6bd0fb6d7f15f5a7d2f2df27f4f
+>>>>>>> 2300a1c0633f87e1ac556521294d99419eed903b
         //если окно создано, то выходим из функции
         if (created)
             return;
@@ -68,13 +97,25 @@ public abstract class Display {
         bufferDuta = ((DataBufferInt) buffer.getRaster().getDataBuffer()).getData();
         //получаем оъект типа graphics, что бы рисовать фигуры
         bufferGraphics = buffer.getGraphics();
+<<<<<<< HEAD
         //добавляем функцию сглаживания
         ((Graphics2D)bufferGraphics).setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         //сохраняем цвет
+=======
+        //сохраняем цвет
+<<<<<<< HEAD
+>>>>>>> 2300a1c0633f87e1ac556521294d99419eed903b
         clearColor = new_clearColor;
 
         content.createBufferStrategy(numBuffer);
         bufferStrategy = content.getBufferStrategy();
+<<<<<<< HEAD
+=======
+=======
+
+        clearColor = new_clearColor;
+>>>>>>> 5aad55debbc3b6bd0fb6d7f15f5a7d2f2df27f4f
+>>>>>>> 2300a1c0633f87e1ac556521294d99419eed903b
 
         created = true;
 
@@ -85,7 +126,44 @@ public abstract class Display {
         //создаем массив с одинаковыми значениями
         Arrays.fill(bufferDuta, clearColor);
     }
+<<<<<<< HEAD
 
+=======
+<<<<<<< HEAD
+
+    //дополнительная временная функция, что бы добавить все что мы хотим в наше окно
+    public static void render() {
+        //выбираем цвет
+        bufferGraphics.setColor(new Color(0xff0000ff));
+        //рисуем круг
+        bufferGraphics.fillOval(350 + (int) (Math.sin(delta) * 200), 250, 100, 100);
+        //добавляем движение для круга
+        //delta += 0.08f;
+
+        //рисуем круг более сглаженным
+        ((Graphics2D) bufferGraphics).setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+=======
+
+    //дополнительная временная функция, что бы добавить все что мы хотим в наше окно
+    public static void render() {
+        //выбираем цвет
+        bufferGraphics.setColor(new Color(0xff0000ff));
+        //рисуем круг
+        bufferGraphics.fillOval(350 +(int) (Math.sin(delta) * 200), 250, 100, 100);
+        //добавляем движение для круга
+        delta += 0.08f;
+    }
+    //дополнительная функция, которая меняет баффер, на который мы смотрим на данный момент, на то что мы создали
+    //на новую сцену
+    public static void swapBuffers(){
+        //новый временный объект графики
+        Graphics g = content.getGraphics();
+        g.drawImage(buffer, 0, 0, null);//рисуем имейдж на координатах с заданной шириной и высотой (в нашес случае не меняем)
+>>>>>>> 5aad55debbc3b6bd0fb6d7f15f5a7d2f2df27f4f
+
+        bufferGraphics.fillOval(500 + (int) (Math.sin(delta) * 200), 250, 100, 100);
+        ((Graphics2D) bufferGraphics).setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
+>>>>>>> 2300a1c0633f87e1ac556521294d99419eed903b
 
     //дополнительная функция, которая меняет баффер, на который мы смотрим на данный момент, на то что мы создали
     //на новую сцену
@@ -108,10 +186,21 @@ public abstract class Display {
         window.dispose();
     }
 
+<<<<<<< HEAD
     //добавляем способ, который меняет наше окно
     public static void setTitle(String title){
         window.setTitle(title);
 
+=======
+    //дополнительная функция, которая меняет баффер, на который мы смотрим на данный момент, на то что мы создали
+    //на новую сцену
+    public static void swapBuffers() {
+        //функция возвращает именно ту графику, которую мы должны рисовать
+        Graphics g = bufferStrategy.getDrawGraphics();
+        g.drawImage(buffer, 0, 0, null);//рисуем имейдж на координатах с заданной шириной и высотой (в нашес случае не меняем)
+        //показываем то, что нарисовали
+        bufferStrategy.show();
+>>>>>>> 2300a1c0633f87e1ac556521294d99419eed903b
     }
 
 
