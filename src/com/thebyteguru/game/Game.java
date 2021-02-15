@@ -1,17 +1,12 @@
 package com.thebyteguru.game;
 
-<<<<<<< HEAD
 import com.thebyteguru.IO.Input;
-=======
->>>>>>> 43e9b961238d18be690125602e136b3bb0581c45
 import com.thebyteguru.display.Display;
 import com.thebyteguru.utils.Time;
+import graphics.TextureAtlas;
 
 import java.awt.*;
-<<<<<<< HEAD
 import java.awt.event.KeyEvent;
-=======
->>>>>>> 43e9b961238d18be690125602e136b3bb0581c45
 
 //класс для структуры игры
 public class Game implements Runnable {
@@ -36,22 +31,22 @@ public class Game implements Runnable {
     private Thread gameThread;
     private Graphics2D graphics;
 
-<<<<<<< HEAD
     //создаем обьект
     private Input input;
 
+    //создаем картинку
+    private TextureAtlas atlas;
+    //вытаскиваем картинку, что б потом можно было удобнее поменять ее
+    public static final String ATLAS_FILE_NAME = "Models.png";
 
-=======
->>>>>>> 43e9b961238d18be690125602e136b3bb0581c45
+
+
     //temp
     float x = 350;
     float y = 250;
     float delta = 0;
     float radius = 50;
-<<<<<<< HEAD
     float speed = 3;
-=======
->>>>>>> 43e9b961238d18be690125602e136b3bb0581c45
 
     //temp end
 
@@ -65,12 +60,11 @@ public class Game implements Runnable {
 
         graphics = Display.getGraphics();
 
-<<<<<<< HEAD
         input = new Input();
         Display.addInputListener(input);
 
-=======
->>>>>>> 43e9b961238d18be690125602e136b3bb0581c45
+        atlas = new TextureAtlas(ATLAS_FILE_NAME);
+
     }
 
     //способ запускать игру
@@ -104,7 +98,6 @@ public class Game implements Runnable {
 
     //считает физику, позиции, движения
     private void update() {
-<<<<<<< HEAD
         //передаем кнопке ASCI код
         if (input.getKey(KeyEvent.VK_UP))
             y -= speed;
@@ -114,10 +107,6 @@ public class Game implements Runnable {
             x -= speed;
         if (input.getKey(KeyEvent.VK_RIGHT))
             x += speed;
-=======
-        delta += 0.02f;
-
->>>>>>> 43e9b961238d18be690125602e136b3bb0581c45
     }
 
     //после того как посчитали физику, рисуем при ее помощи объекты (это само ядро, где бесконечный луп)
@@ -125,7 +114,10 @@ public class Game implements Runnable {
         //очищаем экран черным цветом
         Display.clear();
         graphics.setColor(Color.white);
-        graphics.fillOval((int) (x + (Math.sin(delta) * 200)),(int) y, (int) radius * 2, (int) radius * 2);
+
+        graphics.drawImage(atlas.cut(0,0,32,32), 300, 300, null);
+
+        //graphics.fillOval((int) (x + (Math.sin(delta) * 200)),(int) y, (int) radius * 2, (int) radius * 2);
         //говорим, что мы закончили рисовать и хотим показать
         Display.swapBuffers();
 
