@@ -3,6 +3,8 @@ package com.thebyteguru.game;
 import com.thebyteguru.IO.Input;
 import com.thebyteguru.display.Display;
 import com.thebyteguru.utils.Time;
+import graphics.Sprite;
+import graphics.SpriteSheet;
 import graphics.TextureAtlas;
 
 import java.awt.*;
@@ -36,19 +38,23 @@ public class Game implements Runnable {
 
     //создаем картинку
     private TextureAtlas atlas;
+
+    private Player player;
+
+//    private SpriteSheet sheet;
+//    private Sprite sprite;
     //вытаскиваем картинку, что б потом можно было удобнее поменять ее
     public static final String ATLAS_FILE_NAME = "Models.png";
 
 
-
-    //temp
-    float x = 350;
-    float y = 250;
-    float delta = 0;
-    float radius = 50;
-    float speed = 3;
-
-    //temp end
+//    //temp
+//    float x = 350;
+//    float y = 250;
+//    float delta = 0;
+//    float radius = 50;
+//    float speed = 3;
+//
+//    //temp end
 
 
     //структура игры
@@ -64,6 +70,12 @@ public class Game implements Runnable {
         Display.addInputListener(input);
 
         atlas = new TextureAtlas(ATLAS_FILE_NAME);
+        player = new Player(300, 300, 4, 5, atlas);
+
+
+//        sheet = new SpriteSheet(atlas.cut(1 * 16, 9 * 16, 16, 16), 2, 16);
+//        sprite = new Sprite(sheet, 1);
+
 
     }
 
@@ -98,26 +110,32 @@ public class Game implements Runnable {
 
     //считает физику, позиции, движения
     private void update() {
-        //передаем кнопке ASCI код
-        if (input.getKey(KeyEvent.VK_UP))
-            y -= speed;
-        if (input.getKey(KeyEvent.VK_DOWN))
-            y += speed;
-        if (input.getKey(KeyEvent.VK_LEFT))
-            x -= speed;
-        if (input.getKey(KeyEvent.VK_RIGHT))
-            x += speed;
+        player.update(input);
+
+//        //передаем кнопке ASCI код
+//        if (input.getKey(KeyEvent.VK_UP))
+//            y -= speed;
+//        if (input.getKey(KeyEvent.VK_DOWN))
+//            y += speed;
+//        if (input.getKey(KeyEvent.VK_LEFT))
+//            x -= speed;
+//        if (input.getKey(KeyEvent.VK_RIGHT))
+//            x += speed;
     }
 
     //после того как посчитали физику, рисуем при ее помощи объекты (это само ядро, где бесконечный луп)
     private void render() {
         //очищаем экран черным цветом
         Display.clear();
-        graphics.setColor(Color.white);
 
-        graphics.drawImage(atlas.cut(0,0,32,32), 300, 300, null);
+        player.render(graphics);
 
-        //graphics.fillOval((int) (x + (Math.sin(delta) * 200)),(int) y, (int) radius * 2, (int) radius * 2);
+//        sprite.render(graphics, x, y);
+//        graphics.setColor(Color.white);
+//
+//        graphics.drawImage(atlas.cut(0, 0, 32, 32), 300, 300, null);
+//
+//        //graphics.fillOval((int) (x + (Math.sin(delta) * 200)),(int) y, (int) radius * 2, (int) radius * 2);
         //говорим, что мы закончили рисовать и хотим показать
         Display.swapBuffers();
 
@@ -131,7 +149,6 @@ public class Game implements Runnable {
         int upd = 0;
         int updLoop = 0;
         long count = 0;
-
 
 
         float delta = 0;
@@ -175,7 +192,7 @@ public class Game implements Runnable {
                 }
             }
             //если прошла одна секунда, как мы включили нашу игру, то высвечиваем данные
-            if (count >= Time.SECOND){
+            if (count >= Time.SECOND) {
                 Display.setTitle(TITLE + " || fps:" + fps + " | upd:" + upd + " | updLoop:" + updLoop);
                 upd = 0;
                 updLoop = 0;
